@@ -2,16 +2,6 @@
 
 Frontend of the Lesson Booking App built with Vue.js. Users can view, sort, and add lessons to a cart, then proceed to checkout. It connects to a REST API for managing lesson data and orders. Features include dynamic sorting, cart management, and input validation for a smooth user experience.
 
-This template should help get you started developing with Vue 3 in Vite.
-
-## Recommended IDE Setup
-
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vite.dev/config/).
-
 ## Project Setup
 
 ```sh
