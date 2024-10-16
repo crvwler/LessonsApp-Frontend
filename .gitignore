@@ -9,8 +9,14 @@ lerna-debug.log*
 
 node_modules
 .DS_Store
+.bower_components/
 dist
 dist-ssr
+
+# Production build
+dist/
+build/
+
 coverage
 *.local
 
@@ -28,3 +34,16 @@ coverage
 *.sw?
 
 *.tsbuildinfo
+
+
+# Optional npm cache directory
+.npm/
+
+# Environment Variables
+.env
+.env.local
+.env.*.local
+
+# Local development
+.vscode/
+.idea/
