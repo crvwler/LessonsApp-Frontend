@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from "vue";
 
-// Define reactive states for the dropdown and mobile menu visibility
+// reactive states for the dropdown and mobile menu visibility
 const isDropdownOpen = ref(false);
 const isMobileMenuOpen = ref(false);
 
@@ -20,7 +20,6 @@ const closeDropdown = (event) => {
   const dropdownElement = document.getElementById("user-dropdown");
   const buttonElement = document.getElementById("user-menu-button");
 
-  // If the clicked element is outside the dropdown and the button, close the dropdown
   if (
     dropdownElement &&
     !dropdownElement.contains(event.target) &&
@@ -36,7 +35,6 @@ onMounted(() => {
   document.addEventListener("click", closeDropdown);
 });
 
-// Clean up the listener when the component is destroyed
 onBeforeUnmount(() => {
   document.removeEventListener("click", closeDropdown);
 });
@@ -44,7 +42,7 @@ onBeforeUnmount(() => {
 
 <template>
   <header>
-    <nav class="bg-white border-gray-200 dark:bg-gray-900 relative">
+    <nav class="bg-white border-gray-200 dark:bg-gray-900">
       <div
         class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <!-- Logo or Brand Name -->
@@ -54,6 +52,14 @@ onBeforeUnmount(() => {
             LessonsApp
           </span>
         </RouterLink>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
 
         <!-- User Profile & Hamburger Menu -->
         <div
@@ -79,11 +85,11 @@ onBeforeUnmount(() => {
             id="user-dropdown">
             <div class="px-4 py-3">
               <span class="block text-sm text-gray-900 dark:text-white"
-                >Username</span
+                >{Username}</span
               >
               <span
                 class="block text-sm text-gray-500 truncate dark:text-gray-400"
-                >username@gmail.com</span
+                >{username@gmail.com}</span
               >
             </div>
             <ul class="py-2" aria-labelledby="user-menu-button">
@@ -138,7 +144,7 @@ onBeforeUnmount(() => {
             <li>
               <RouterLink
                 to="/"
-                class="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500"
+                class="block py-2 md:p-0 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:dark:text-blue-500"
                 aria-current="page">
                 Dashboard
               </RouterLink>
