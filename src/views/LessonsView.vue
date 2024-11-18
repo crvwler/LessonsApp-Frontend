@@ -1,60 +1,28 @@
 <template>
-  <div class="p-6 bg-gray-100 min-h-screen">
+  <div class="p-6 bg-gray-100 min-h-screen pt-28">
     <div class="max-w-7xl mx-auto">
-      <h1 class="text-2xl font-bold mb-4">Available Lessons</h1>
-      <p class="text-gray-600 mb-6">Select a lesson to add to your cart.</p>
-
-      <!-- Sort Options -->
-      <div class="mb-6 flex items-center space-x-4">
-        <label for="sort-by" class="font-semibold">Sort By:</label>
-        <select v-model="sortBy" id="sort-by" class="p-2 border rounded-md">
-          <option value="subject">Subject</option>
-          <option value="location">Location</option>
-          <option value="price">Price</option>
-          <option value="availableSpaces">Spaces</option>
-        </select>
-
-        <!-- Ascending / Descending Toggle -->
-        <button
-          @click="toggleSortOrder"
-          class="bg-blue-500 text-white px-4 py-2 rounded">
-          Sort: {{ sortOrder === "asc" ? "Ascending" : "Descending" }}
-        </button>
+      <!-- Conditionally Render Lessons or Cart -->
+      <div v-if="!isCartView">
+        <LessonsView
+          :lessons="sortedLessons"
+          :sort-by="sortBy"
+          :sort-order="sortOrder"
+          @sort-change="updateSort"
+          @add-to-cart="addToCart" />
+      </div>
+      <div v-else>
+        <Cart :cart="cart" @remove-item="removeFromCart" />
       </div>
 
-      <!-- Responsive Grid for Lessons -->
-      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-        <div
-          v-for="lesson in sortedLessons"
-          :key="lesson.id"
-          class="bg-white p-6 rounded-md shadow-md flex flex-col items-start">
-          <!-- Font Awesome Icon -->
-          <i class="fas fa-book text-blue-500 text-3xl mb-4"></i>
-
-          <!-- Lesson Details -->
-          <h2 class="text-xl font-semibold">Subject: {{ lesson.subject }}</h2>
-          <p class="text-gray-700">Location: {{ lesson.location }}</p>
-          <p class="text-gray-700">Price: £{{ lesson.price }}</p>
-          <p class="text-gray-700">
-            Available Spaces: {{ lesson.availableSpaces }}
-          </p>
-
-          <!-- Add to Cart Button -->
-          <button
-            :disabled="lesson.availableSpaces === 0"
-            @click="addToCart(lesson)"
-            class="bg-blue-500 text-white px-4 py-2 mt-4 rounded disabled:opacity-50 disabled:cursor-not-allowed">
-            Add to Cart
-          </button>
-        </div>
-      </div>
-
-      <!-- View Cart Button -->
+      <!-- Toggle Cart/Lesson View Button -->
       <div class="text-center mt-8">
         <button
-          class="bg-green-500 text-white px-6 py-2 rounded"
-          @click="viewCart">
-          View Cart ({{ cart.length }} items)
+          class="bg-green-500 text-white px-6 py-2 rounded disabled:opacity-50"
+          :disabled="!isCartView && cart.length === 0"
+          @click="toggleCartView">
+          {{
+            isCartView ? "Back to Lessons" : `View Cart (${cart.length} items)`
+          }}
         </button>
       </div>
     </div>
@@ -62,18 +30,64 @@
 </template>
 
 <script>
+import { toast } from "vue3-toastify";
+import "vue3-toastify/dist/index.css";
+import LessonsView from "../components/Lessons.vue";
+import Cart from "../components/Cart.vue";
+
+// Images
+import mathImg from "../assets/mathematics.jpg";
+import englishImg from "../assets/english.jpg";
+import physicsImg from "../assets/physics.jpg";
+import chemistryImg from "../assets/chemistry.jpg";
+import biologyImg from "../assets/biology.jpg";
+import historyImg from "../assets/history.jpg";
+import geographyImg from "../assets/geography.jpg";
+import compsciImg from "../assets/computer.jpg";
+import artImg from "../assets/art.jpg";
+import musicImg from "../assets/music.jpg";
+import peImg from "../assets/physicaleducation.jpg";
+import philosophyImg from "../assets/philosophy.jpg";
+import economicsImg from "../assets/economics.jpg";
+import frenchImg from "../assets/french.jpg";
+import psychologyImg from "../assets/psychology.jpg";
+
 export default {
   name: "Lessons",
+  components: {
+    LessonsView,
+    Cart,
+  },
   data() {
     return {
-      // Initial lessons data
-      lessons: [
+      lessons: this.initializeLessons(),
+      cart: [],
+      sortBy: "subject",
+      sortOrder: "asc",
+      isCartView: false,
+    };
+  },
+  computed: {
+    sortedLessons() {
+      return this.lessons.sort((a, b) => {
+        const comparison =
+          this.sortBy === "price" || this.sortBy === "availableSpaces"
+            ? a[this.sortBy] - b[this.sortBy]
+            : a[this.sortBy].localeCompare(b[this.sortBy]);
+        return this.sortOrder === "asc" ? comparison : -comparison;
+      });
+    },
+  },
+  methods: {
+    initializeLessons() {
+      return [
         {
           id: 1,
           subject: "Mathematics",
           location: "London",
           price: 100,
           availableSpaces: 5,
+          image: mathImg,
         },
         {
           id: 2,
@@ -81,129 +95,148 @@ export default {
           location: "Manchester",
           price: 80,
           availableSpaces: 5,
+          image: englishImg,
         },
         {
           id: 3,
           subject: "Physics",
           location: "Birmingham",
           price: 120,
-          availableSpaces: 5,
+          availableSpaces: 3,
+          image: physicsImg,
         },
         {
           id: 4,
           subject: "Chemistry",
-          location: "Leeds",
-          price: 90,
-          availableSpaces: 5,
+          location: "Liverpool",
+          price: 110,
+          availableSpaces: 2,
+          image: chemistryImg,
         },
         {
           id: 5,
           subject: "Biology",
-          location: "London",
-          price: 110,
-          availableSpaces: 5,
+          location: "Bristol",
+          price: 90,
+          availableSpaces: 6,
+          image: biologyImg,
         },
         {
           id: 6,
           subject: "History",
-          location: "Bristol",
-          price: 85,
-          availableSpaces: 5,
+          location: "Leeds",
+          price: 70,
+          availableSpaces: 4,
+          image: historyImg,
         },
         {
           id: 7,
           subject: "Geography",
-          location: "Cambridge",
+          location: "Sheffield",
           price: 95,
           availableSpaces: 5,
+          image: geographyImg,
         },
         {
           id: 8,
           subject: "Computer Science",
-          location: "Oxford",
-          price: 150,
-          availableSpaces: 5,
+          location: "Nottingham",
+          price: 130,
+          availableSpaces: 3,
+          image: compsciImg,
         },
         {
           id: 9,
           subject: "Art",
-          location: "Liverpool",
-          price: 70,
-          availableSpaces: 5,
+          location: "Brighton",
+          price: 60,
+          availableSpaces: 8,
+          image: artImg,
         },
         {
           id: 10,
           subject: "Music",
-          location: "Edinburgh",
-          price: 60,
-          availableSpaces: 5,
-        },
-        {
-          id: 19,
-          subject: "Law",
           location: "Oxford",
-          price: 160,
-          availableSpaces: 2,
+          price: 150,
+          availableSpaces: 4,
+          image: musicImg,
         },
         {
-          id: 20,
-          subject: "Engineering",
+          id: 11,
+          subject: "Physical Education",
           location: "Cambridge",
-          price: 170,
-          availableSpaces: 5,
+          price: 85,
+          availableSpaces: 7,
+          image: peImg,
         },
-      ],
-      cart: [], // Cart items
-      sortBy: "subject", // Sort by default attribute
-      sortOrder: "asc", // Default sorting order
-    };
-  },
-  computed: {
-    // Computed property to return sorted lessons
-    sortedLessons() {
-      return this.lessons.sort((a, b) => {
-        let comparison = 0;
-        if (this.sortBy === "price" || this.sortBy === "availableSpaces") {
-          // Numeric comparison for price and availableSpaces
-          comparison = a[this.sortBy] - b[this.sortBy];
-        } else {
-          // String comparison for subject and location
-          comparison = a[this.sortBy].localeCompare(b[this.sortBy]);
-        }
-        // Reverse order for descending sort
-        return this.sortOrder === "asc" ? comparison : -comparison;
-      });
+        {
+          id: 12,
+          subject: "Philosophy",
+          location: "Edinburgh",
+          price: 100,
+          availableSpaces: 3,
+          image: philosophyImg,
+        },
+        {
+          id: 13,
+          subject: "Economics",
+          location: "York",
+          price: 115,
+          availableSpaces: 2,
+          image: economicsImg,
+        },
+        {
+          id: 14,
+          subject: "French",
+          location: "Cardiff",
+          price: 75,
+          availableSpaces: 6,
+          image: frenchImg,
+        },
+        {
+          id: 15,
+          subject: "Psychology",
+          location: "Glasgow",
+          price: 125,
+          availableSpaces: 3,
+          image: psychologyImg,
+        },
+      ];
     },
-  },
-  methods: {
     addToCart(lesson) {
-      const lessonInCart = this.cart.find(
-        (cartLesson) => cartLesson.id === lesson.id
-      );
-
-      if (!lessonInCart) {
-        if (lesson.availableSpaces > 0) {
-          this.cart.push(lesson);
-          lesson.availableSpaces--;
-          alert(`${lesson.subject} has been added to your cart.`);
-        } else {
-          alert("Sorry, no spaces available for this lesson.");
-        }
+      if (lesson.availableSpaces > 0) {
+        this.cart.push({ ...lesson });
+        lesson.availableSpaces--;
+        toast.success(`${lesson.subject} has been added to your cart.`, {
+          autoClose: 1000,
+        });
       } else {
-        alert(`${lesson.subject} is already in your cart.`);
+        toast.warning("Sorry, no spaces available for this lesson.", {
+          autoClose: 1000,
+        });
       }
     },
-    viewCart() {
-      alert(`You have added ${this.cart.length} lesson(s) to your cart.`);
+    removeFromCart(index) {
+      if (confirm("Are you sure you want to remove this lesson?")) {
+        const removedItem = this.cart[index];
+        const lesson = this.lessons.find(
+          (lesson) => lesson.id === removedItem.id
+        );
+        if (lesson) lesson.availableSpaces++;
+        this.cart.splice(index, 1);
+        toast.info(`${removedItem.subject} has been removed from your cart.`, {
+          autoClose: 1000,
+        });
+      }
     },
-    // Toggle sorting order between ascending and descending
-    toggleSortOrder() {
-      this.sortOrder = this.sortOrder === "asc" ? "desc" : "asc";
+    toggleCartView() {
+      this.isCartView = !this.isCartView;
+      this.$router.push({ name: this.isCartView ? "Cart" : "Lessons" });
+    },
+    updateSort({ sortBy, sortOrder }) {
+      this.sortBy = sortBy;
+      this.sortOrder = sortOrder;
     },
   },
 };
 </script>
-
-<style scoped>
-/* Add any additional custom styles if needed */
-</style>
