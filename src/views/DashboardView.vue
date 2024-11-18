@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-gray-100 min-h-svh">
+  <div class="bg-gray-100 min-h-svh pt-16">
     <div
       class="lg:px-40 lg:pt-20 lg:flex p-10 space-y-8 lg:space-y-0 lg:space-x-8">
       <!-- Welcome Section -->
@@ -9,9 +9,11 @@
           Your learning journey continues here. Get an overview of your progress
           and explore new lessons.
         </p>
-        <button class="bg-blue-500 text-white px-4 py-2 rounded">
-          Go to Lessons
-        </button>
+        <RouterLink to="/lessons">
+          <button class="bg-gray-800 text-white px-4 py-2 rounded">
+            Go to Lessons
+          </button>
+        </RouterLink>
       </div>
 
       <!-- User Details Card -->
@@ -43,11 +45,11 @@ export default {
   name: "Dashboard",
   data() {
     return {
-      username: "John Doe",
+      username: "Abdullahi",
       lessonsInProgress: 2,
       completedLessons: 5,
       cartItems: 3,
-      userEmail: "johndoe@gmail.com",
+      userEmail: "aaababuji@gmail.com",
       memberSince: "October 2023",
     };
   },
