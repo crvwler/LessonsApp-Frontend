@@ -71,9 +71,9 @@ export default {
     },
     addToCart(lesson) {
       if (lesson.availableSpaces > 0) {
-        this.cart.push({ ...lesson });
+        const cartItem = { ...lesson, lessonID: lesson.id || lesson._id }; // Assign lessonID
+        this.cart.push(cartItem);
         lesson.availableSpaces--;
-        this.cart[this.cart.length - 1].lessonID = lesson.id;
         toast.success(`${lesson.subject} has been added to your cart.`, {
           autoClose: 1000,
         });

@@ -2,7 +2,7 @@
   <div class="bg-gray-100 py-6">
     <div class="max-w-7xl mx-auto">
       <div v-if="cart.length === 0" class="text-gray-600 mb-6">
-        <p class="text-gray-500">
+        <p class="text-gray-500 text-center">
           Your cart is empty. Add lessons to see them here!
         </p>
       </div>
@@ -143,11 +143,8 @@ export default {
         const order = {
           name: this.name,
           phone: this.phone,
-          lessonIDs: this.cart.map((item) => item.id),
-          numberOfSpaces: this.cart.reduce(
-            (sum, item) => sum + item.availableSpaces,
-            0
-          ),
+          lessonIDs: this.cart.map((item) => item.lessonID),
+          numberOfSpaces: this.cart.length,
         };
         await submitOrder(order);
         this.orderSubmitted = true;
@@ -157,7 +154,6 @@ export default {
         this.phoneTouched = false;
         this.$emit("clear-cart");
 
-        // Trigger success toast notification
         toast.success("Your order has been successfully submitted!", {
           position: "top-right",
           autoClose: 3000,
