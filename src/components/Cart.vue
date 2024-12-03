@@ -21,7 +21,7 @@
               class="p-4 border rounded-md bg-white">
               <div class="flex gap-4">
                 <img
-                  :src="`http://localhost:5000${item.image}`"
+                  :src="`https://lessonsapp-backend.onrender.com${item.image}`"
                   @error="
                     item.image = require('@/assets/default-placeholder.jpg')
                   "

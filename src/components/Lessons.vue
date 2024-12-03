@@ -26,7 +26,7 @@
         :key="lesson.id"
         class="bg-white rounded-md shadow-md flex flex-col items-start">
         <img
-          :src="`http://localhost:5000${lesson.image}`"
+          :src="`https://lessonsapp-backend.onrender.com${lesson.image}`"
           @error="item.image = require('../assets/default-placeholder.png')"
           alt="Lesson Image"
           class="w-full h-40 object-cover mb-4" />
