@@ -72,11 +72,11 @@ onBeforeUnmount(() => {
             id="user-dropdown">
             <div class="px-4 py-3">
               <span class="block text-sm text-gray-900 dark:text-white">
-                {Username}
+                Abdullahi Abubakar
               </span>
               <span
                 class="block text-sm text-gray-500 truncate dark:text-gray-400">
-                {username@gmail.com}
+                aaababuji@gmail.com
               </span>
             </div>
             <ul class="py-2" aria-labelledby="user-menu-button">

@@ -1,4 +1,3 @@
-// src/api/lessonsService.js
 import apiClient from "./apiClient";
 
 export const fetchLessons = async () => {

@@ -67,7 +67,7 @@ export default {
   },
   methods: {
     async fetchLessonsData() {
-      this.lessons = await fetchLessons(); // Fetch lessons from API
+      this.lessons = await fetchLessons();
     },
     addToCart(lesson) {
       if (lesson.availableSpaces > 0) {
@@ -98,7 +98,7 @@ export default {
     },
     clearCart() {
       this.cart = [];
-      localStorage.removeItem("cart"); // Remove from localStorage
+      localStorage.removeItem("cart");
       toast.success("Your cart has been cleared!", { autoClose: 2000 });
     },
     toggleCartView() {
@@ -111,7 +111,7 @@ export default {
     },
   },
   async mounted() {
-    await this.fetchLessonsData(); // Fetch lessons when component is mounted
+    await this.fetchLessonsData();
     const savedCart = JSON.parse(localStorage.getItem("cart"));
     if (savedCart) this.cart = savedCart;
   },

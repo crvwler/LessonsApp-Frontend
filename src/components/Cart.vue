@@ -104,7 +104,7 @@
 <script>
 import { toast } from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
-import { submitOrder } from "@/api/orderService"; // Import submitOrder function
+import { submitOrder } from "@/api/orderService";
 
 export default {
   name: "Cart",
@@ -119,8 +119,8 @@ export default {
       name: "",
       phone: "",
       orderSubmitted: false,
-      nameTouched: false, // Flag to track if the user interacted with the name field
-      phoneTouched: false, // Flag to track if the user interacted with the phone field
+      nameTouched: false,
+      phoneTouched: false,
     };
   },
   computed: {
@@ -141,7 +141,7 @@ export default {
     async submitOrder() {
       try {
         const order = {
-          name: this.name, // Ensure name is sent as expected
+          name: this.name,
           phone: this.phone,
           lessonIDs: this.cart.map((item) => item.id),
           numberOfSpaces: this.cart.reduce(
@@ -180,10 +180,10 @@ export default {
       this.$emit("remove-item", index);
     },
     clearCart() {
-      this.cart = []; // Clear the cart in the parent
+      this.cart = [];
     },
     goBackToLessons() {
-      this.$router.push("/"); // Navigate back to lessons page
+      this.$router.push("/");
     },
   },
 };
