@@ -11,7 +11,10 @@
           @add-to-cart="addToCart" />
       </div>
       <div v-else>
-        <Cart :cart="cart" @remove-item="removeFromCart" />
+        <Cart
+          :cart="cart"
+          @remove-item="removeFromCart"
+          @clear-cart="clearCart" />
       </div>
 
       <!-- Toggle Cart/Lesson View Button -->
@@ -34,23 +37,7 @@ import { toast } from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
 import LessonsView from "../components/Lessons.vue";
 import Cart from "../components/Cart.vue";
-
-// Images
-import mathImg from "../assets/mathematics.jpg";
-import englishImg from "../assets/english.jpg";
-import physicsImg from "../assets/physics.jpg";
-import chemistryImg from "../assets/chemistry.jpg";
-import biologyImg from "../assets/biology.jpg";
-import historyImg from "../assets/history.jpg";
-import geographyImg from "../assets/geography.jpg";
-import compsciImg from "../assets/computer.jpg";
-import artImg from "../assets/art.jpg";
-import musicImg from "../assets/music.jpg";
-import peImg from "../assets/physicaleducation.jpg";
-import philosophyImg from "../assets/philosophy.jpg";
-import economicsImg from "../assets/economics.jpg";
-import frenchImg from "../assets/french.jpg";
-import psychologyImg from "../assets/psychology.jpg";
+import { fetchLessons } from "@/api/lessonsService";
 
 export default {
   name: "Lessons",
@@ -60,7 +47,7 @@ export default {
   },
   data() {
     return {
-      lessons: this.initializeLessons(),
+      lessons: [],
       cart: [],
       sortBy: "subject",
       sortOrder: "asc",
@@ -79,134 +66,14 @@ export default {
     },
   },
   methods: {
-    initializeLessons() {
-      return [
-        {
-          id: 1,
-          subject: "Mathematics",
-          location: "London",
-          price: 100,
-          availableSpaces: 5,
-          image: mathImg,
-        },
-        {
-          id: 2,
-          subject: "English Literature",
-          location: "Manchester",
-          price: 80,
-          availableSpaces: 5,
-          image: englishImg,
-        },
-        {
-          id: 3,
-          subject: "Physics",
-          location: "Birmingham",
-          price: 120,
-          availableSpaces: 3,
-          image: physicsImg,
-        },
-        {
-          id: 4,
-          subject: "Chemistry",
-          location: "Liverpool",
-          price: 110,
-          availableSpaces: 2,
-          image: chemistryImg,
-        },
-        {
-          id: 5,
-          subject: "Biology",
-          location: "Bristol",
-          price: 90,
-          availableSpaces: 6,
-          image: biologyImg,
-        },
-        {
-          id: 6,
-          subject: "History",
-          location: "Leeds",
-          price: 70,
-          availableSpaces: 4,
-          image: historyImg,
-        },
-        {
-          id: 7,
-          subject: "Geography",
-          location: "Sheffield",
-          price: 95,
-          availableSpaces: 5,
-          image: geographyImg,
-        },
-        {
-          id: 8,
-          subject: "Computer Science",
-          location: "Nottingham",
-          price: 130,
-          availableSpaces: 3,
-          image: compsciImg,
-        },
-        {
-          id: 9,
-          subject: "Art",
-          location: "Brighton",
-          price: 60,
-          availableSpaces: 8,
-          image: artImg,
-        },
-        {
-          id: 10,
-          subject: "Music",
-          location: "Oxford",
-          price: 150,
-          availableSpaces: 4,
-          image: musicImg,
-        },
-        {
-          id: 11,
-          subject: "Physical Education",
-          location: "Cambridge",
-          price: 85,
-          availableSpaces: 7,
-          image: peImg,
-        },
-        {
-          id: 12,
-          subject: "Philosophy",
-          location: "Edinburgh",
-          price: 100,
-          availableSpaces: 3,
-          image: philosophyImg,
-        },
-        {
-          id: 13,
-          subject: "Economics",
-          location: "York",
-          price: 115,
-          availableSpaces: 2,
-          image: economicsImg,
-        },
-        {
-          id: 14,
-          subject: "French",
-          location: "Cardiff",
-          price: 75,
-          availableSpaces: 6,
-          image: frenchImg,
-        },
-        {
-          id: 15,
-          subject: "Psychology",
-          location: "Glasgow",
-          price: 125,
-          availableSpaces: 3,
-          image: psychologyImg,
-        },
-      ];
+    async fetchLessonsData() {
+      this.lessons = await fetchLessons(); // Fetch lessons from API
     },
     addToCart(lesson) {
       if (lesson.availableSpaces > 0) {
         this.cart.push({ ...lesson });
         lesson.availableSpaces--;
+        this.cart[this.cart.length - 1].lessonID = lesson.id;
         toast.success(`${lesson.subject} has been added to your cart.`, {
           autoClose: 1000,
         });
@@ -229,6 +96,11 @@ export default {
         });
       }
     },
+    clearCart() {
+      this.cart = [];
+      localStorage.removeItem("cart"); // Remove from localStorage
+      toast.success("Your cart has been cleared!", { autoClose: 2000 });
+    },
     toggleCartView() {
       this.isCartView = !this.isCartView;
       this.$router.push({ name: this.isCartView ? "Cart" : "Lessons" });
@@ -236,6 +108,19 @@ export default {
     updateSort({ sortBy, sortOrder }) {
       this.sortBy = sortBy;
       this.sortOrder = sortOrder;
+    },
+  },
+  async mounted() {
+    await this.fetchLessonsData(); // Fetch lessons when component is mounted
+    const savedCart = JSON.parse(localStorage.getItem("cart"));
+    if (savedCart) this.cart = savedCart;
+  },
+  watch: {
+    cart: {
+      handler(newCart) {
+        localStorage.setItem("cart", JSON.stringify(newCart));
+      },
+      deep: true,
     },
   },
 };

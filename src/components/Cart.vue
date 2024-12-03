@@ -21,8 +21,10 @@
               class="p-4 border rounded-md bg-white">
               <div class="flex gap-4">
                 <img
-                  :src="item.image"
-                  @error="this.src = 'default-placeholder.jpg'"
+                  :src="`http://localhost:5000${item.image}`"
+                  @error="
+                    item.image = require('@/assets/default-placeholder.jpg')
+                  "
                   alt="Lesson Image"
                   class="w-24 h-38 object-cover rounded-md" />
                 <div class="flex-1">
@@ -102,6 +104,7 @@
 <script>
 import { toast } from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
+import { submitOrder } from "@/api/orderService"; // Import submitOrder function
 
 export default {
   name: "Cart",
@@ -135,26 +138,52 @@ export default {
     },
   },
   methods: {
+    async submitOrder() {
+      try {
+        const order = {
+          name: this.name, // Ensure name is sent as expected
+          phone: this.phone,
+          lessonIDs: this.cart.map((item) => item.id),
+          numberOfSpaces: this.cart.reduce(
+            (sum, item) => sum + item.availableSpaces,
+            0
+          ),
+        };
+        await submitOrder(order);
+        this.orderSubmitted = true;
+        this.name = "";
+        this.phone = "";
+        this.nameTouched = false;
+        this.phoneTouched = false;
+        this.$emit("clear-cart");
+
+        // Trigger success toast notification
+        toast.success("Your order has been successfully submitted!", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeButton: false,
+        });
+      } catch (error) {
+        toast.error(
+          "There was an error submitting your order. Please try again.",
+          {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeButton: false,
+          }
+        );
+      }
+    },
     removeItem(index) {
       this.$emit("remove-item", index);
     },
-    submitOrder() {
-      this.orderSubmitted = true;
-      this.name = "";
-      this.phone = "";
-      this.nameTouched = false;
-      this.phoneTouched = false;
-
-      // Trigger toast notification after order submission
-      toast.success("Your order has been successfully submitted!", {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeButton: false,
-      });
+    clearCart() {
+      this.cart = []; // Clear the cart in the parent
     },
     goBackToLessons() {
-      this.$router.push("/lessons");
+      this.$router.push("/"); // Navigate back to lessons page
     },
   },
 };

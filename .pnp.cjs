@@ -29,6 +29,7 @@ const RAW_RUNTIME_STATE =
         "packageDependencies": [\
           ["@vitejs/plugin-vue", "virtual:d3ad91b58d84895cccbaaeae991cbb448e4d59bd195e56e45e14173c4f8ddc1d5f4a810e767da992113f16e67557cc8f1510244331700c09f0727b674e03bf28#npm:5.1.4"],\
           ["autoprefixer", "virtual:d3ad91b58d84895cccbaaeae991cbb448e4d59bd195e56e45e14173c4f8ddc1d5f4a810e767da992113f16e67557cc8f1510244331700c09f0727b674e03bf28#npm:10.4.20"],\
+          ["axios", "npm:1.7.8"],\
           ["class-variance-authority", "npm:0.7.0"],\
           ["esbuild", "npm:0.24.0"],\
           ["postcss", "npm:8.4.47"],\
@@ -1006,6 +1007,15 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["asynckit", [\
+      ["npm:0.4.0", {\
+        "packageLocation": "../../../AppData/Local/Yarn/Berry/cache/asynckit-npm-0.4.0-c718858525-10c0.zip/node_modules/asynckit/",\
+        "packageDependencies": [\
+          ["asynckit", "npm:0.4.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["autoprefixer", [\
       ["npm:10.4.20", {\
         "packageLocation": "../../../AppData/Local/Yarn/Berry/cache/autoprefixer-npm-10.4.20-dd5fd05d27-10c0.zip/node_modules/autoprefixer/",\
@@ -1030,6 +1040,18 @@ const RAW_RUNTIME_STATE =
         "packagePeers": [\
           "@types/postcss",\
           "postcss"\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["axios", [\
+      ["npm:1.7.8", {\
+        "packageLocation": "../../../AppData/Local/Yarn/Berry/cache/axios-npm-1.7.8-b20f5c399f-10c0.zip/node_modules/axios/",\
+        "packageDependencies": [\
+          ["axios", "npm:1.7.8"],\
+          ["follow-redirects", "virtual:b20f5c399f1c73779564cfbf31ebf34158d62e6122d6790256982fed4a9dc55158231d1376ae0d31259b225576e217004a11eb64342859f09e60586674e3bee9#npm:1.15.9"],\
+          ["form-data", "npm:4.0.1"],\
+          ["proxy-from-env", "npm:1.1.0"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -1197,6 +1219,16 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["combined-stream", [\
+      ["npm:1.0.8", {\
+        "packageLocation": "../../../AppData/Local/Yarn/Berry/cache/combined-stream-npm-1.0.8-dc14d4a63a-10c0.zip/node_modules/combined-stream/",\
+        "packageDependencies": [\
+          ["combined-stream", "npm:1.0.8"],\
+          ["delayed-stream", "npm:1.0.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["commander", [\
       ["npm:4.1.1", {\
         "packageLocation": "../../../AppData/Local/Yarn/Berry/cache/commander-npm-4.1.1-22a0fe921b-10c0.zip/node_modules/commander/",\
@@ -1255,6 +1287,15 @@ const RAW_RUNTIME_STATE =
         "packagePeers": [\
           "@types/supports-color",\
           "supports-color"\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["delayed-stream", [\
+      ["npm:1.0.0", {\
+        "packageLocation": "../../../AppData/Local/Yarn/Berry/cache/delayed-stream-npm-1.0.0-c5a4c4cc02-10c0.zip/node_modules/delayed-stream/",\
+        "packageDependencies": [\
+          ["delayed-stream", "npm:1.0.0"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -1472,6 +1513,28 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["follow-redirects", [\
+      ["npm:1.15.9", {\
+        "packageLocation": "../../../AppData/Local/Yarn/Berry/cache/follow-redirects-npm-1.15.9-539785d34c-10c0.zip/node_modules/follow-redirects/",\
+        "packageDependencies": [\
+          ["follow-redirects", "npm:1.15.9"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:b20f5c399f1c73779564cfbf31ebf34158d62e6122d6790256982fed4a9dc55158231d1376ae0d31259b225576e217004a11eb64342859f09e60586674e3bee9#npm:1.15.9", {\
+        "packageLocation": "./.yarn/__virtual__/follow-redirects-virtual-6fdfc913d4/4/AppData/Local/Yarn/Berry/cache/follow-redirects-npm-1.15.9-539785d34c-10c0.zip/node_modules/follow-redirects/",\
+        "packageDependencies": [\
+          ["follow-redirects", "virtual:b20f5c399f1c73779564cfbf31ebf34158d62e6122d6790256982fed4a9dc55158231d1376ae0d31259b225576e217004a11eb64342859f09e60586674e3bee9#npm:1.15.9"],\
+          ["@types/debug", null],\
+          ["debug", null]\
+        ],\
+        "packagePeers": [\
+          "@types/debug",\
+          "debug"\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["foreground-child", [\
       ["npm:3.3.0", {\
         "packageLocation": "../../../AppData/Local/Yarn/Berry/cache/foreground-child-npm-3.3.0-b8be745271-10c0.zip/node_modules/foreground-child/",\
@@ -1479,6 +1542,18 @@ const RAW_RUNTIME_STATE =
           ["foreground-child", "npm:3.3.0"],\
           ["cross-spawn", "npm:7.0.3"],\
           ["signal-exit", "npm:4.1.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["form-data", [\
+      ["npm:4.0.1", {\
+        "packageLocation": "../../../AppData/Local/Yarn/Berry/cache/form-data-npm-4.0.1-f1a27a1c2e-10c0.zip/node_modules/form-data/",\
+        "packageDependencies": [\
+          ["form-data", "npm:4.0.1"],\
+          ["asynckit", "npm:0.4.0"],\
+          ["combined-stream", "npm:1.0.8"],\
+          ["mime-types", "npm:2.1.35"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -1769,6 +1844,7 @@ const RAW_RUNTIME_STATE =
           ["lessonsapp-frontend", "workspace:."],\
           ["@vitejs/plugin-vue", "virtual:d3ad91b58d84895cccbaaeae991cbb448e4d59bd195e56e45e14173c4f8ddc1d5f4a810e767da992113f16e67557cc8f1510244331700c09f0727b674e03bf28#npm:5.1.4"],\
           ["autoprefixer", "virtual:d3ad91b58d84895cccbaaeae991cbb448e4d59bd195e56e45e14173c4f8ddc1d5f4a810e767da992113f16e67557cc8f1510244331700c09f0727b674e03bf28#npm:10.4.20"],\
+          ["axios", "npm:1.7.8"],\
           ["class-variance-authority", "npm:0.7.0"],\
           ["esbuild", "npm:0.24.0"],\
           ["postcss", "npm:8.4.47"],\
@@ -1862,6 +1938,25 @@ const RAW_RUNTIME_STATE =
           ["micromatch", "npm:4.0.8"],\
           ["braces", "npm:3.0.3"],\
           ["picomatch", "npm:2.3.1"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["mime-db", [\
+      ["npm:1.52.0", {\
+        "packageLocation": "../../../AppData/Local/Yarn/Berry/cache/mime-db-npm-1.52.0-b5371d6fd2-10c0.zip/node_modules/mime-db/",\
+        "packageDependencies": [\
+          ["mime-db", "npm:1.52.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["mime-types", [\
+      ["npm:2.1.35", {\
+        "packageLocation": "../../../AppData/Local/Yarn/Berry/cache/mime-types-npm-2.1.35-dd9ea9f3e2-10c0.zip/node_modules/mime-types/",\
+        "packageDependencies": [\
+          ["mime-types", "npm:2.1.35"],\
+          ["mime-db", "npm:1.52.0"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -2317,6 +2412,15 @@ const RAW_RUNTIME_STATE =
           ["promise-retry", "npm:2.0.1"],\
           ["err-code", "npm:2.0.3"],\
           ["retry", "npm:0.12.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["proxy-from-env", [\
+      ["npm:1.1.0", {\
+        "packageLocation": "../../../AppData/Local/Yarn/Berry/cache/proxy-from-env-npm-1.1.0-c13d07f26b-10c0.zip/node_modules/proxy-from-env/",\
+        "packageDependencies": [\
+          ["proxy-from-env", "npm:1.1.0"]\
         ],\
         "linkType": "HARD"\
       }]\

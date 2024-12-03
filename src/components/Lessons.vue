@@ -26,8 +26,8 @@
         :key="lesson.id"
         class="bg-white rounded-md shadow-md flex flex-col items-start">
         <img
-          :src="lesson.image"
-          @error="this.src = 'default-placeholder.jpg'"
+          :src="`http://localhost:5000${lesson.image}`"
+          @error="item.image = require('../assets/default-placeholder.png')"
           alt="Lesson Image"
           class="w-full h-40 object-cover mb-4" />
         <div class="px-6 pb-4">
