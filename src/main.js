@@ -8,6 +8,7 @@ import apiClient from "./api/apiClient";
 const app = createApp(App);
 
 app.config.globalProperties.$apiClient = apiClient;
+
 app.use(router);
 
 app.mount("#app");

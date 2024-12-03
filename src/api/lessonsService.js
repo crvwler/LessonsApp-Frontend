@@ -2,8 +2,8 @@ import apiClient from "./apiClient";
 
 export const fetchLessons = async () => {
   try {
-    const response = await apiClient.get("/lessons");
-    return response.data;
+    const lessons = await apiClient.get("/lessons");
+    return lessons;
   } catch (error) {
     console.error("Error fetching lessons:", error);
     return [];

@@ -1,37 +1,42 @@
-import axios from "axios";
-
-const apiClient = axios.create({
+const apiClient = {
   baseURL: "https://lessonsapp-backend.onrender.com",
   headers: {
     "Content-Type": "application/json",
   },
-});
 
-// Request interceptor
-apiClient.interceptors.request.use(
-  (config) => {
-    return config;
+  async request(method, url, data = null) {
+    const options = {
+      method: method,
+      headers: this.headers,
+    };
+
+    if (data) {
+      options.body = JSON.stringify(data);
+    }
+
+    try {
+      const response = await fetch(`${this.baseURL}${url}`, options);
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      return await response.json();
+    } catch (error) {
+      console.error("API error:", error);
+      throw error;
+    }
   },
-  (error) => {
-    return Promise.reject(error);
-  }
-);
 
-// Response interceptor
-apiClient.interceptors.response.use(
-  (response) => {
-    return response;
+  // A GET request method
+  async get(url) {
+    return this.request("GET", url);
   },
-  (error) => {
-    console.error("API error:", error);
-    return Promise.reject(error);
-  }
-);
 
-// Cache control to prevent caching
-apiClient.interceptors.request.use((config) => {
-  config.headers["Cache-Control"] = "no-cache";
-  return config;
-});
+  // A POST request method
+  async post(url, data) {
+    return this.request("POST", url, data);
+  },
+};
 
 export default apiClient;
